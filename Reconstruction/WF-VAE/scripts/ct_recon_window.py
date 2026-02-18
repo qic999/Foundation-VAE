@@ -556,7 +556,7 @@ def process_single_file_simple(video_path, save_path, model_name="vae",
 
 if __name__ == '__main__':
     # 配置参数
-    input_dir = '/home/v-qichen3/blob/qichen_blob/data/CT/Task06_Lung/imagesTr'
+    input_dir = 'CT/Task06_Lung/imagesTr'
     output_dir = './reconstructed_results_wfvae_lung'
     
     # CausalVideoVAE模型参数
@@ -575,37 +575,3 @@ if __name__ == '__main__':
         skip_existing=True
     )
     
-    # 如果想要重新处理所有文件（不跳过已存在的）
-    # main_dir(
-    #     input_dir=input_dir,
-    #     output_dir=output_dir,
-    #     model_name=model_name,
-    #     from_pretrained=from_pretrained,
-    #     window_size=65,
-    #     device="cuda",
-    #     enable_tiling=False,
-    #     skip_existing=False
-    # )
-    
-    # 使用批量处理版本
-    # main_dir_batch(
-    #     input_dir=input_dir,
-    #     output_dir=output_dir,
-    #     model_name=model_name,
-    #     from_pretrained=from_pretrained,
-    #     window_size=65,
-    #     batch_size=4,
-    #     device="cuda",
-    #     enable_tiling=False,
-    #     skip_existing=True
-    # )
-    
-    # 处理单个文件（简单版本，无滑窗）
-    # process_single_file_simple(
-    #     video_path='./path/to/single/file.nii.gz',
-    #     save_path='./output',
-    #     model_name=model_name,
-    #     from_pretrained=from_pretrained,
-    #     device="cuda",
-    #     enable_tiling=False
-    # )

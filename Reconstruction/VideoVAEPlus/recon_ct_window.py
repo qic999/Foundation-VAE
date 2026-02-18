@@ -513,7 +513,7 @@ def main_dir_batch(input_dir, output_dir, config_path, window_size=64, chunk_siz
 
 if __name__ == '__main__':
     # 配置参数
-    input_dir = '/home/v-qichen3/blob/qichen_blob/data/CT/Task06_Lung/imagesTr'
+    input_dir = 'data/CT/Task06_Lung/imagesTr'
     output_dir = './reconstructed_results_videovaeplus_lung'
     config_path = 'configs/inference/config_16z.yaml'  # 需要指定配置文件路径
     
@@ -521,12 +521,3 @@ if __name__ == '__main__':
     # window_size改为64以匹配4的倍数要求
     main_dir(input_dir, output_dir, config_path, 
             window_size=64, chunk_size=16, device="cuda:0", skip_existing=True)
-    
-    # 如果想要重新处理所有文件（不跳过已存在的）
-    # main_dir(input_dir, output_dir, config_path,
-    #         window_size=64, chunk_size=16, device="cuda:0", skip_existing=False)
-    
-    # 或者使用批量处理版本
-    # main_dir_batch(input_dir, output_dir, config_path,
-    #               window_size=64, chunk_size=16, batch_size=4, 
-    #               device="cuda:0", skip_existing=True)

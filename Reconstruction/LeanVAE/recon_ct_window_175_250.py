@@ -567,7 +567,3 @@ if __name__ == '__main__':
             skip_existing=skip_existing
         )
 
-
-
-# Basic usage
-# python recon_ct_window.py --input_dir /home/v-qichen3/blob/qichen_blob/data/CT/Task07_Pancreas/imagesTr --output_dir reconstructed_results_leanvae_pancreas --ckpt_path ckpts/LeanVAE-dim16.ckpt

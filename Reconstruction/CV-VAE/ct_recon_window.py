@@ -506,25 +506,10 @@ def process_single_file_simple(video_path, save_path, model_path='AILab-CVC/CV-V
 
 if __name__ == '__main__':
     # 配置参数
-    input_dir = '/home/v-qichen3/blob/qichen_blob/data/CT/Task06_Lung/imagesTr'
+    input_dir = 'data/CT/Task06_Lung/imagesTr'
     output_dir = './reconstructed_results_cvvae_lung'
     model_path = 'AILab-CVC/CV-VAE'  # 或本地路径
     
     # 使用基础版本处理目录（默认跳过已存在的文件）
     main_dir(input_dir, output_dir, model_path=model_path, 
             window_size=65, skip_existing=True)
-    
-    # 如果想要重新处理所有文件（不跳过已存在的）
-    # main_dir(input_dir, output_dir, model_path=model_path,
-    #         window_size=64, skip_existing=False)
-    
-    # 或者使用批量处理版本
-    # main_dir_batch(input_dir, output_dir, model_path=model_path,
-    #               window_size=64, batch_size=4, skip_existing=True)
-    
-    # 处理单个文件（简单版本，无滑窗）
-    # process_single_file_simple(
-    #     video_path='./path/to/single/file.nii.gz',
-    #     save_path='./output',
-    #     model_path=model_path
-    # )
