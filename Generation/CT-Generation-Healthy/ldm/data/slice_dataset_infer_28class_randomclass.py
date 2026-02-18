@@ -1,0 +1,99 @@
+import os
+import numpy as np
+# from skimage.transform import resize
+import cv2
+from torch.utils.data import Dataset
+import copy
+
+def get_filtered_mask(mask, selected_classes):
+    # 创建只包含选定类别的 mask
+    filtered_mask = np.isin(mask, selected_classes) * mask
+    return filtered_mask
+
+class slice_base(Dataset):
+    def __init__(self,
+                 data_root,
+                 data_name,
+                 data_file,
+                 data_repeat=1
+                 ):
+
+        self.data_root = data_root
+        planner = 'nnUNetResEncUNetLPlans_torchres_3d_fullres' # nnUNetResEncUNetLPlans_torchres_3d_fullres nnUNetPlans_3d_fullres
+        data_root = os.path.join(data_root, data_name , planner) 
+        # self.list = [os.path.join(data_name, planner ,f) for f in os.listdir(data_root) if f.endswith('.npz')]
+        file_list = []
+        for line in open(data_file):
+            name = line.strip().split()[1].split('.nii.gz')[0]
+            name = name.split('/')[-1]
+            file_list.append(name)
+        # breakpoint()
+        self.list = [os.path.join(data_name, planner , i+'.npz') for i in file_list]
+        
+        self._length = len(self.list)
+        self._data_repeat = data_repeat
+
+
+    def __len__(self):
+        return self._length * self._data_repeat
+
+    def __getitem__(self, i):
+        i = i % self._length
+        
+        npz_file = os.path.join(self.data_root, self.list[i])
+        data_npz = np.load(npz_file)['data'][0] # np.load(npz_file)['seg']
+        seg_npz = np.load(npz_file)['seg'][0]
+        # breakpoint()
+        # pos_id = np.random.randint(0, data_npz.shape[0])
+        # pos_id = data_npz.shape[0]//2
+        pos_id_list = np.where(np.any(data_npz==2, axis=(1, 2)))[0]
+        pos_id = pos_id_list[len(pos_id_list)//2]
+        # breakpoint()
+        slice_data = data_npz[pos_id]
+        slice_seg = seg_npz[pos_id]
+
+        slice_data[slice_data <= -175] = -175
+        slice_data[slice_data >= 250] = 250
+        slice_data = (slice_data+175)/425.0
+
+        slice_seg[slice_seg==1] = 5
+        slice_seg[slice_seg==2] = 26
+
+        # tumor_mask = (slice_seg==2).astype(np.float32)
+        slice_seg = slice_seg.astype(np.float32)
+        foreground_mask = (slice_seg>0).astype(np.float32)
+        masked_data = (1-foreground_mask)*slice_data
+
+        slice_data = slice_data[:,:,None].astype(np.float32)
+        masked_data = masked_data[:,:,None].astype(np.float32)
+        
+        # tumor_mask = resize(tumor_mask, (64,64), order=0)
+        slice_seg = cv2.resize(slice_seg,(64,64),interpolation=cv2.INTER_NEAREST)
+        slice_seg = slice_seg[:,:,None].astype(np.float32)
+        # print(np.unique(slice_seg))
+        # breakpoint()
+        example = {}
+        example['name'] = self.list[i].split('/')[-1].split('.')[0]
+        # example['pos_id'] = pos_id
+        example['slice_data'] = slice_data * 2 - 1
+        example['masked_data'] = masked_data * 2 - 1
+        example['tumor_mask'] = slice_seg
+        # breakpoint()
+        return example
+
+class slice_train(slice_base):
+    def __init__(self, data_file='data_split/liver/train.txt', **kwargs):
+        super().__init__(data_file=data_file, **kwargs)
+
+
+class slice_val(slice_base):
+    def __init__(self, data_file='data_split/liver/eval.txt', **kwargs):
+        super().__init__(data_file=data_file, **kwargs)
+
+    # def __len__(self):
+    #     return 2 if super().__len__() // 10000 < 2 else super().__len__() // 10000
+
+class slice_test(slice_base):
+    def __init__(self, data_file='data_splits/test.txt', **kwargs):
+        super().__init__(**kwargs)
+    

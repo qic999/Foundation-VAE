@@ -1,0 +1,16 @@
+decord
+diffusers
+imageio
+einops
+gdown
+numpy
+opencv_python
+Pillow
+safetensors
+torch==2.4.0
+torchvision
+torchaudio
+tqdm
+lpips
+wandb
+accelerate

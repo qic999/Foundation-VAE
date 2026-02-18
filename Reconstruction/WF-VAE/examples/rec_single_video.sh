@@ -1,0 +1,12 @@
+CUDA_VISIBLE_DEVICES=0 python scripts/recon_single_video.py \
+    --model_name WFVAE \
+    --from_pretrained "chestnutlzj/WF-VAE-L-16Chn" \
+    --video_path /home/v-qichen3/video_vae/code/iv-vae/video/ori.mp4 \
+    --rec_path rec_tile.mp4 \
+    --device cuda \
+    --sample_rate 1 \
+    --num_frames 100 \
+    --height 512 \
+    --width 512 \
+    --fps 30 \
+    --enable_tiling

@@ -1,0 +1,71 @@
+model:
+  base_learning_rate: 5.0e-6
+  target: ldm.models.diffusion.ddpm_pseudo3D.LatentDiffusion
+  params:
+    linear_start: 0.00085
+    linear_end: 0.0120
+    num_timesteps_cond: 1
+    log_every_t: 200
+    timesteps: 1000
+    first_stage_key: volume_data
+    cond_stage_key: volume_seg_and_text
+    # cond_stage_trainable: false
+    conditioning_key: crossattn # crossattn
+    text_enc: custom
+    image_size: 64
+    channels: 16
+    monitor: val/loss_simple_ema
+    scale_factor: 1.52
+    use_ema: False
+    ckpt_path: /sd/qichen/full_ct_gen/GEM-3D-ct-text4-newdata-newvae/logs/full_ct_2d_with_body_mask4/checkpoints/epoch=000833.ckpt
+    # ckpt_path: /sd/qichen/full_ct_gen/GEM-3D-ct-text4-newdata-newvae/logs/full_ct_2d_with_body_mask/checkpoints/base.ckpt
+    load_only_unet: True
+    fix_t: True
+
+    unet_config:
+      target: ldm.modules.diffusionmodules.openaimodel_pseudo3D.UNetModel
+      params:
+        image_size: 64
+        in_channels: 32 # 4
+        out_channels: 16 # 4
+        model_channels: 224
+        attention_resolutions: [ 8, 4, 2 ]
+        num_res_blocks: 2
+        channel_mult: [ 1, 2, 3, 4 ]
+        num_head_channels: 32
+        use_spatial_transformer: true
+        context_dim: 768
+        transformer_depth: 1
+        use_checkpoint: True
+        legacy: False
+
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 4
+    num_workers: 16
+    wrap: false
+    train:
+      target: ldm.data.ct_clip_data_train.CTReportDataset
+      params:
+        data_folder: '/sd/shuhan/CT-RATE/dataset/train_fixed'
+        csv_file: '/sd/shuhan/CT-RATE/radiology_text_reports/train_reports.csv'
+
+    validation:
+      target: ldm.data.ct_clip_data_inference.CTReportDatasetinfer
+      params:
+        data_folder: '/sd/shuhan/CT-RATE/dataset/valid_fixed'
+        csv_file: '/sd/shuhan/CT-RATE/radiology_text_reports/valid_reports.csv'
+        labels: '/sd/shuhan/CT-RATE/multi_abnormality_labels/valid_predicted_labels.csv'
+
+lightning:
+  callbacks:
+    image_logger:
+      target: main.ImageLogger
+      params:
+        batch_frequency: 100000000
+        max_images: 16
+        increase_log_steps: False
+
+  trainer:
+    benchmark: True

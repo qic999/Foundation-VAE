@@ -1,0 +1,12 @@
+data:
+  target: main.DataModuleFromConfig
+  params:
+    batch_size: 1
+    num_workers: 5
+    wrap: false
+    validation:
+      # target: ldm.data.volume_dataset_infer.volume_val
+      target: ldm.data.volume_dataset_infer.volume_train
+      params:
+        data_root: '/storage/chenqi/data/our_data/nnUNet_preprocessed/'
+        data_name: 'Dataset010_MSD_Liver'

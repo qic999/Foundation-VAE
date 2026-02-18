@@ -1,0 +1,90 @@
+model:
+  base_learning_rate: 1.0e-4 #5.80e-04
+  scale_lr: False
+  target: src.models.autoencoder2plus1d_1dcnn.AutoencoderKL2plus1D_1dcnn
+  params:
+    monitor: "val/rec_loss"
+    video_key: video
+    image_key: video
+    img_video_joint_train: True
+    caption_guide: False
+    use_quant_conv: False
+
+    ignore_keys_3d: ['loss']
+    ckpt_path: ckpt/sota-4-16z.ckpt
+    input_dim: 5
+    
+    lossconfig:
+      target: src.modules.losses.LPIPSWithDiscriminator
+      params:
+        disc_start: 50001
+        kl_weight: 0.000001
+        disc_weight: 0.5
+
+    ddconfig:
+      double_z: True
+      z_channels: 16
+      resolution: 216
+      in_channels: 3
+      out_ch: 3
+      ch: 128
+      ch_mult: [ 1,2,4,4 ]
+      temporal_down_factor: 1
+      num_res_blocks: 2
+      attn_resolutions: [ ]
+      dropout: 0.0
+    
+    ppconfig:
+      temporal_scale_factor: 4
+      z_channels: 16
+      out_ch: 16
+      ch: 16
+      attn_temporal_factor: []
+
+data:
+  target: data.lightning_data.DataModuleFromConfig
+  params:
+    img_video_joint_train: True
+    batch_size: 1
+    num_workers: 20
+    wrap: false
+    train:
+      target: data.dataset.DatasetVideoLoader
+      params:
+        csv_file: path/to/your.csv
+        resolution: [216, 216]
+        video_length: 16
+        subset_split: train
+    validation:
+      target: data.dataset.DatasetVideoLoader
+      params:
+        csv_file: path/to/your.csv
+        resolution: [216, 216]
+        video_length: 16
+        subset_split: val
+
+lightning:
+  find_unused_parameters: True
+  callbacks:
+    image_logger:
+      target: utils.callbacks.ImageLogger
+      params:
+        batch_frequency: 1009
+        max_images: 8
+    metrics_over_trainsteps_checkpoint:
+      target: pytorch_lightning.callbacks.ModelCheckpoint
+      params:
+        filename: '{epoch:06}-{step:09}'
+        save_weights_only: False
+        every_n_train_steps: 5000
+  trainer:
+    benchmark: True
+    accumulate_grad_batches: 2
+    batch_size: 1
+    num_workers: 20
+    max_epochs: 3000
+  modelcheckpoint:
+    target: pytorch_lightning.callbacks.ModelCheckpoint
+    params:
+      every_n_train_steps: 3000
+      filename: "{epoch:04}-{step:06}"

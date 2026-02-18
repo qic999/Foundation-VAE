@@ -1,0 +1,41 @@
+model:
+  base_learning_rate: 1.0e-4
+  scale_lr: False
+  target: src.models.autoencoder2plus1d_1dcnn.AutoencoderKL2plus1D_1dcnn
+  params:
+    monitor: "val/rec_loss"
+    video_key: video
+    image_key: video
+    ckpt_path: ckpt/sota-4-16z.ckpt
+    input_dim: 5
+    ignore_keys_3d: ['loss']
+    caption_guide: False
+    use_quant_conv: False
+    img_video_joint_train: False
+    
+    lossconfig:
+      target: src.modules.losses.LPIPSWithDiscriminator3D
+      params:
+        disc_start: 50001
+        kl_weight: 0 
+        disc_weight: 0.5
+
+    ddconfig:
+      double_z: True
+      z_channels: 16
+      resolution: 216
+      in_channels: 3
+      out_ch: 3
+      ch: 128
+      ch_mult: [ 1,2,4,4 ] 
+      temporal_down_factor: 1
+      num_res_blocks: 2
+      attn_resolutions: []
+      dropout: 0.0
+    
+    ppconfig:
+      temporal_scale_factor: 4
+      z_channels: 16
+      out_ch: 16
+      ch: 16 
+      attn_temporal_factor: []
