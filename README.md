@@ -4,6 +4,8 @@
 
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=qic999/Foundation-VAE)
 [![GitHub Repo stars](https://img.shields.io/github/stars/qic999/Foundation-VAE?style=social)](https://github.com/qic999/Foundation-VAE/stargazers)
+[![arXiv](https://img.shields.io/badge/arXiv-red)]() &ensp; [![Project Page](https://img.shields.io/badge/Project%20Page-green
+)](https://qic999.github.io/projects/Foundation-VAE/)
 
 </div>
 
