@@ -18,7 +18,7 @@ We make a progressive stride toward training-free medical VAEs by leveraging a c
 ## Paper
 
 <b>Foundation VAE for CT Reconstruction, Augmentation, and Generation</b> <br/>
-[Qi Chen](https://scholar.google.com/citations?user=4Q5gs2MAAAAJ&hl=en)<sup>1</sup>, [Shuhan Ding](https://scholar.google.com/citations?user=NluKVTAAAAAJ&hl=en&oi=ao)<sup>2</sup>, [Yu Gu](https://scholar.google.com/citations?user=1PoaURIAAAAJ&hl=en)<sup>3</sup>, [Nan Liu](https://scholar.google.com/citations?user=ceF698kAAAAJ&hl=en/)<sup>1</sup>, [Jiang Bian](https://scholar.google.com/citations?user=pZBEnY8AAAAJ&hl=en/)<sup>3</sup>, [Alan L. Yuille](https://www.cs.jhu.edu/~ayuille/)<sup>3</sup>, [Zongwei Zhou](https://www.zongweiz.com/)<sup>1</sup> and [Jingjing Fu](https://scholar.google.com/citations?user=w-6C7LkAAAAJ&hl=zh-CN/)<sup>3,*</sup> <br/>
+[Qi Chen](https://scholar.google.com/citations?user=4Q5gs2MAAAAJ&hl=en)<sup>1</sup>, [Shuhan Ding](https://scholar.google.com/citations?user=NluKVTAAAAAJ&hl=en&oi=ao)<sup>2</sup>, [Yu Gu](https://scholar.google.com/citations?user=1PoaURIAAAAJ&hl=en)<sup>3</sup>, [Nan Liu](https://scholar.google.com/citations?user=ceF698kAAAAJ&hl=en/)<sup>2</sup>, [Jiang Bian](https://scholar.google.com/citations?user=pZBEnY8AAAAJ&hl=en/)<sup>3</sup>, [Alan L. Yuille](https://www.cs.jhu.edu/~ayuille/)<sup>1</sup>, [Zongwei Zhou](https://www.zongweiz.com/)<sup>1</sup> and [Jingjing Fu](https://scholar.google.com/citations?user=w-6C7LkAAAAJ&hl=zh-CN/)<sup>3,*</sup> <br/>
 <sup>1 </sup>Johns Hopkins University,  <br/>
 <sup>2 </sup>Duke-NUS Medical School,  <br/>
 <sup>3 </sup>Microsoft Research  <br/>
@@ -37,6 +37,16 @@ cd Foundation-VAE
 ## 1. Reconstruction
 We transfer a Foundation VAE pretrained on natural images/videos to 3D CT reconstruction with both encoder and decoder frozen.
 This reconstruction operator suppresses acquisition noise while preserving clinically relevant anatomical boundaries, making it suitable as a stable CT interface across heterogeneous scanners and protocols.
+
+### Demo
+<p align="center">
+  <img width="100%" src="figures/lung_066_grid_allz_loop_small.gif" alt="Foundation-VAE lung reconstruction demo" />
+</p>
+<p align="center"><em>MSD Task06 Lung: reconstruction and segmentation comparison.</em></p>
+<p align="center">
+  <img width="100%" src="figures/pancreas_095_grid_allz_loop.gif" alt="Foundation-VAE pancreas reconstruction demo" />
+</p>
+<p align="center"><em>MSD Task07 Pancreas: reconstruction and segmentation comparison.</em></p>
 
 ### Data
 - You can evaluate on [MSD dataset](http://medicaldecathlon.com/)
@@ -69,6 +79,16 @@ In the same fixed Foundation VAE latent space, we train a **conditional latent d
 
 This enables controllable synthesis of healthy and abnormal CT volumes under unified latent modeling.
 
+### Demo
+<p align="center">
+  <img width="100%" src="figures/three_view_valid_991_a_1_loop_small.gif" alt="Foundation-VAE controllable CT generation demo" />
+</p>
+<p align="center"><em>Three-view (axial/coronal/sagittal) generated CT with report conditioning.</em></p>
+<p align="center">
+  <img width="100%" src="figures/loop_small.gif" alt="Foundation-VAE anatomical and pathological grounding demo" />
+</p>
+<p align="center"><em>Anatomical and pathological grounding comparison.</em></p>
+
 Released generation models/assets:
 [https://huggingface.co/qicq1c/Foundation-VAE/tree/main/Generation](https://huggingface.co/qicq1c/Foundation-VAE/tree/main/Generation)
 
@@ -88,4 +108,3 @@ Released generation models/assets:
   url           = {https://arxiv.org/abs/2602.12345}
 }
 ```
-
