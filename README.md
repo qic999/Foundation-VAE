@@ -99,14 +99,9 @@ Released generation models/assets:
 ## Citation
 
 ```
-@article{chen2026foundationvae,
-  title         = {Foundation VAE for CT Reconstruction, Augmentation, and Generation},
-  author        = {Chen, Qi and Ding, Shuhan and Gu, Yu and Liu, Nan and Bian, Jiang and Yuille, Alan L. and Zhou, Zongwei and Fu, Jingjing},
-  journal       = {arXiv preprint arXiv:2602.12345},
-  year          = {2026},
-  archivePrefix = {arXiv},
-  eprint        = {2602.12345},
-  primaryClass  = {cs.CV},
-  url           = {https://arxiv.org/abs/2602.12345}
+@inproceedings{chenfoundation,
+  title={Foundation VAE for CT Reconstruction, Augmentation, and Generation},
+  author={Chen, Qi and Ding, Shuhan and Gu, Yu and Liu, Nan and Bian, Jiang and Yuille, Alan and Zhou, Zongwei and Fu, Jingjing},
+  booktitle={Forty-third International Conference on Machine Learning}
 }
 ```
