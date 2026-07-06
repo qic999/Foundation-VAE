@@ -18,10 +18,11 @@ We make a progressive stride toward training-free medical VAEs by leveraging a c
 ## Paper
 
 <b>Foundation VAE for CT Reconstruction, Augmentation, and Generation</b> <br/>
-[Qi Chen](https://scholar.google.com/citations?user=4Q5gs2MAAAAJ&hl=en)<sup>1,*</sup>, [Shuhan Ding](https://scholar.google.com/citations?user=NluKVTAAAAAJ&hl=en&oi=ao)<sup>2,*</sup>, [Yu Gu](https://scholar.google.com/citations?user=1PoaURIAAAAJ&hl=en)<sup>3</sup>, [Nan Liu](https://scholar.google.com/citations?user=ceF698kAAAAJ&hl=en/)<sup>2</sup>, [Jiang Bian](https://scholar.google.com/citations?user=pZBEnY8AAAAJ&hl=en/)<sup>3</sup>, [Alan L. Yuille](https://www.cs.jhu.edu/~ayuille/)<sup>1</sup>, [Zongwei Zhou](https://www.zongweiz.com/)<sup>1</sup> and [Jingjing Fu](https://scholar.google.com/citations?user=w-6C7LkAAAAJ&hl=zh-CN/)<sup>3</sup> <br/>
-<sup>1 </sup>Johns Hopkins University,  <br/>
-<sup>2 </sup>Duke-NUS Medical School,  <br/>
-<sup>3 </sup>Microsoft Research  <br/>
+[Qi Chen](https://scholar.google.com/citations?user=4Q5gs2MAAAAJ&hl=en)<sup>1,*</sup>, [Shuhan Ding](https://scholar.google.com/citations?user=NluKVTAAAAAJ&hl=en&oi=ao)<sup>2,*</sup>, [Yu Gu](https://scholar.google.com/citations?user=1PoaURIAAAAJ&hl=en)<sup>3</sup>, [Nan Liu](https://scholar.google.com/citations?user=ceF698kAAAAJ&hl=en)<sup>2</sup>, [Jiang Bian](https://scholar.google.com/citations?user=pZBEnY8AAAAJ&hl=en)<sup>3</sup>, [Alan L. Yuille](https://www.cs.jhu.edu/~ayuille/)<sup>1</sup>, [Zongwei Zhou](https://www.zongweiz.com/)<sup>1</sup>, and [Jingjing Fu](https://scholar.google.com/citations?user=w-6C7LkAAAAJ&hl=zh-CN)<sup>3</sup> <br/>
+<sup>1</sup> Johns Hopkins University <br/>
+<sup>2</sup> Duke-NUS Medical School <br/>
+<sup>3</sup> Microsoft Research <br/>
+<sup>*</sup> Equal contribution
 [paper](https://www.cs.jhu.edu/~alanlab/Pubs24/chen2024towards.pdf) | [code](https://github.com/qic999/Foundation-VAE) | [huggingface](https://huggingface.co/qicq1c/Foundation-VAE)
 
 **We have summarized publications related to Medical VAE in [Awesome Medical VAE](https://github.com/qic999/Foundation-VAE/blob/main/AWESOME.md) [![Awesome](https://awesome.re/badge.svg)](https://awesome.re).**
